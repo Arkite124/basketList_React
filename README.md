@@ -10,5 +10,9 @@
 상업적 목적이나 유료 서비스에 사용되지 않습니다.
 
 이미지에 대한 저작권은 각 상품 제공처 및 브랜드에 귀속됩니다.
+문제될 시 메일(ghkddudwnd@naver.com(자주 확인)
+/ ghkddudwnd@gmail.com(거의 확인 안함)) 주시면 해당이미지 확인 후 수정하도록 하겠습니다.
+
 1. firstCommit : Readme 작성 및 기초 작업
 2. add image : springboot에서 작성해놓은 샘플데이터에 맞춘 이미지파일 추가(노가다)
+3. Readme : Readme에 연락방법 추가
