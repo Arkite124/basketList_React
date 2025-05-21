@@ -17,3 +17,4 @@
 2. add image : springboot에서 작성해놓은 샘플데이터에 맞춘 이미지파일 추가(노가다)
 3. Readme : Readme에 연락방법 추가
 4. App : React-Router-dom 설치 및 기본 예상 구조 형성
+5. page : 예상구조에 맞는 페이지 임시구성, 로컬서버 포트 수정(팀프로젝트와 다른 포트 사용)
