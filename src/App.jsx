@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomeLayout from "./layout/HomeLayout.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import LoginPage from "./Pages/LoginPage.jsx";
-import SignupPage from "./Pages/SignupPage.jsx";
+import RegisterPage from "./Pages/Register/RegisterPage.jsx";
 import ShoppingPage from "./Pages/shopping/ShoppingPage.jsx";
 import ShoppingDetailPage from "./Pages/shopping/ShoppingDetailPage.jsx";
 import CartMainPage from "./Pages/CartItemList/CartMainPage.jsx";
@@ -15,9 +15,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<HomeLayout/>}/>
+        <Route element={<HomeLayout/>}>
         <Route path={"/"} element={<HomePage/>}/>
-        <Route path={"/signup"} element={<SignupPage/>}/>
+        <Route path={"/register"} element={<RegisterPage/>}/>
         <Route path={"/login"} element={<LoginPage/>}/>
 
           <Route path={"/shopping"}>
@@ -34,6 +34,7 @@ function App() {
             <Route path={"detail"} element={<UserDetailPage/>}/>
             <Route path={"wishList"} element={<UserWishListPage/>}/>
           </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   )
