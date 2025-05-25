@@ -5,7 +5,7 @@ const ModalContext=createContext(null);
 
 export function ModalProvider({ children }){
     const [isOpen,setIsOpen]=useState(false)
-    const [modalContent,setModalContent]=useState(<></>)
+    const [modalContent,setModalContent]=useState(<div></div>)
     const [modalTitle,setModalTitle]=useState("")
 
     const openModal=(title,content) => {
@@ -15,7 +15,7 @@ export function ModalProvider({ children }){
     const closeModal = () =>{
         setModalTitle("")
         setIsOpen(false);
-        setModalContent(null);
+        setModalContent(<div></div>);
     }
 
     return (
@@ -32,9 +32,9 @@ export function ModalProvider({ children }){
                         >
                             X
                         </button>
-                        <Dialog.Title className="flex text-3xl text-black font-mono text-blue-900 pb-3 items-center justify-center w-full
-                        border-b-2 border-gray-500">{modalTitle}</Dialog.Title>
-                        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+                        <Dialog.Title className="flex flex-col text-3xl text-black font-mono text-blue-900 pb-3 items-center justify-center w-full
+                        ">{modalTitle}<img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/></Dialog.Title>
+
                         {modalContent}
                     </Dialog.Panel>
                 </div>

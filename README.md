@@ -21,3 +21,6 @@
 5. page : 예상구조에 맞는 페이지 임시구성, 로컬서버 포트 수정(팀프로젝트와 다른 포트 사용)
 6. modal : 홈페이지 기초 CSS 구성 및 모달 전역 컴포넌트 생성, tailwindcss 익히는 중(생각보다 어렵...)
 한데 익히면 더 쉬워질거 같긴 함 bootstrap보다 자율성도 좋고 설정도 해볼만 함
+7. Provider : ModalProvider로 App 전역을 감쌌고, LoginProvider도 axios를 처음 써보는 프로젝트라서 진행중...
+tailwindcss 아직 익히는 중(익힐게 많음... 글씨체 같은것도 따로 지원)
+font-awesome, googleFont 설치 및 아이콘 적용 및 폰트 알아보다 끝남 다음에 다시...

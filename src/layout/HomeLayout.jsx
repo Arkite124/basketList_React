@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import {TopNavBar} from "./TopNavBar.jsx";
+import {TopNavBar} from "../components/TopNavBar.jsx";
 
 export default function HomeLayout(){
     return(
