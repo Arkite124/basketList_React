@@ -10,9 +10,16 @@ import CartMainPage from "./Pages/CartItemList/CartMainPage.jsx";
 import UserInfoPage from "./Pages/Users/UserInfoPage.jsx";
 import UserDetailPage from "./Pages/Users/UserDetailPage.jsx";
 import UserWishListPage from "./Pages/Users/UserWishListPage.jsx";
+import {useContext} from "react";
+import {LoginContext} from "./Provider/LoginProvider.jsx";
+import {useModalContext} from "./Provider/ModalProvider.jsx";
+import BigLoading from "./components/BigLoading.jsx";
 
 function App() {
-  return (
+  const [isLoading]=useContext(LoginContext)
+  const {modalReady}=useModalContext()
+  if(isLoading || modalReady===false) return <BigLoading/>
+  if(!isLoading && modalReady===true) return (
     <BrowserRouter>
       <Routes>
         <Route element={<HomeLayout/>}>

@@ -4,5 +4,6 @@ import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 import {faCartArrowDown as faCartArrowDown} from "@fortawesome/free-solid-svg-icons";
 import {faStore as faStore} from "@fortawesome/free-solid-svg-icons";
 import {faRightToBracket as faRightToBracket} from "@fortawesome/free-solid-svg-icons";
+import {faCircleNotch as faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faStarRegular, faStarSolid,faCartArrowDown,faStore,faRightToBracket);
+library.add(faStarRegular, faStarSolid,faCartArrowDown,faStore,faRightToBracket,faCircleNotch);
