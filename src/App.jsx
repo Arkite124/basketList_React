@@ -14,11 +14,13 @@ import {useContext} from "react";
 import {LoginContext} from "./Provider/LoginProvider.jsx";
 import {useModalContext} from "./Provider/ModalProvider.jsx";
 import BigLoading from "./components/BigLoading.jsx";
+import ShoppingUploadPage from "./Pages/shopping/ShoppingUploadPage.jsx";
+import ShoppingSearchResult from "./Pages/shopping/ShoppingSearchResult.jsx";
 
 function App() {
   const [isLoading]=useContext(LoginContext)
   const {modalReady}=useModalContext()
-  if(isLoading || modalReady===false) return <BigLoading/>
+  if(isLoading || modalReady===false) return <BigLoading message={"페이지 전체"}/>
   if(!isLoading && modalReady===true) return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +31,9 @@ function App() {
 
           <Route path={"/shopping"}>
             <Route index element={<ShoppingPage/>}/>
-            <Route path={":detail"} element={<ShoppingDetailPage/>}/>
+            <Route path={"detail/:productName"} element={<ShoppingDetailPage/>}/>
+            <Route path={"upload"} element={<ShoppingUploadPage/>}/>
+            <Route path={"result/:keyword"} element={<ShoppingSearchResult/>}/>
           </Route>
 
           <Route path={"/cartList"}>

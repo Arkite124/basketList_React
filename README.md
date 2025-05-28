@@ -19,10 +19,13 @@
 3. Readme : Readme에 연락방법 추가
 4. App : React-Router-dom 설치 및 기본 예상 구조 형성
 5. page : 예상구조에 맞는 페이지 임시구성, 로컬서버 포트 수정(팀프로젝트와 다른 포트 사용)
-6. modal : 홈페이지 기초 CSS 구성 및 모달 전역 컴포넌트 생성, tailwindcss 익히는 중(생각보다 어렵...)
+6. modal : 홈페이지 기초 CSS 구성 및 @Headlessui로 모달 전역 컴포넌트 생성, tailwindcss 익히는 중(생각보다 어렵...)
 한데 익히면 더 쉬워질거 같긴 함 bootstrap보다 자율성도 좋고 설정도 해볼만 함
 7. Provider : ModalProvider로 App 전역을 감쌌고, LoginProvider도 axios를 처음 써보는 프로젝트라서 진행중...
 tailwindcss 아직 익히는 중(익힐게 많음... 글씨체 같은것도 따로 지원)
 font-awesome, googleFont 설치 및 아이콘 적용 및 폰트 알아보다 끝남 다음에 다시...
 8. Product_main : 상품 예시화면 랜덤으로 3개 뜨게 적용함 그에 따라 spring boot 쪽 코드도 바뀜
 폰트 수정은 아직... 로딩 컨텐츠랑 이미지 불러와지지 않는 오류도 해결해야 함 개인적인 일로 어제꺼와 오늘거 함께 commit 합니다...
+9. product : 리스트 사진 정장적으로 불러와짐, DB랑 맞지 않는 사진의 이름 일부 수정, Provider 전부가 로딩된 후 로딩 되도록 전체구조 수정 
+검색결과는 페이지 주소는 나옴, 검색의 구조와 페이지는 구현, 검색 결과는 아직 나오지 않음. tailwind 적용하면서 리액트 버전 다운그레이드한 
+내역 지금 작성했음 장바구니+ bottomNavBar를 어떻게 할지 고민중

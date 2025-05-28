@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -79,11 +79,11 @@ export default function LoginPage(){
             </label>
             <label className="flex items-center w-full h-[10%] font-mono">
                 <span className="flex items-center w-[15%] h-full"> PW :</span><input type="password"
-                                                                                      name="current_password"
-                                                                                      onChange={(e) => {
-                                                                                          inputHandler(e)
-                                                                                      }}
-                                                                                      className="border border-purple-300 focus:outline-none focus:border-purple-300 focus:ring-purple-300
+                  name="current_password"
+                  onChange={(e) => {
+                      inputHandler(e)
+                  }}
+                  className="border border-purple-300 focus:outline-none focus:border-purple-300 focus:ring-purple-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
             font-sans my-2 min-w-2xs max-w-6xl w-[82%] h-[60%] min-h-[40%] max-h-[80%] overflow-scroll flex-end"/>
             </label>

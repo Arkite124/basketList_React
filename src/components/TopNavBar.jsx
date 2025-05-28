@@ -1,6 +1,6 @@
 import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import axios from "axios";
 import {ModalProvider, useModalContext} from "../Provider/ModalProvider.jsx";
@@ -10,6 +10,7 @@ export function TopNavBar() {
     const {openModal,closeModal}=useModalContext()
     const navigate=useNavigate()
     const serverUrl="http://localhost:8000/api/userStatus/logout"
+    const [content,setContent]=useState(InitializeCont)
     const LogOut=async () => {
         axios.post(serverUrl,{
         },{
@@ -20,6 +21,20 @@ export function TopNavBar() {
             ()=> setLoginUser(null)
         )
     }
+    function InitializeCont(){
+        const windowWidth=window.innerWidth
+        if(windowWidth>850)return true
+        return false
+    }
+    useEffect(() => {
+        function sizeHandler() {
+            setContent(InitializeCont)
+        }
+        addEventListener('resize',sizeHandler)
+        return ()=>removeEventListener('resize',sizeHandler)
+    }, []);
+
+
     return (
         <nav className="relative size-16">
             <div
@@ -28,12 +43,12 @@ export function TopNavBar() {
                     <Link to="/" className="flex flex-row">
                         <p className="text-orange-600 text-3xl flex items-center font-mono"><FontAwesomeIcon icon="fa-solid fa-store" />Home</p></Link>
                 </div>
-                <div className="flex flex-row fixed left-[25%] right-[25%] justify-center top-0 my-4">
+        {content && <div className="flex flex-row fixed left-[25%] right-[25%] justify-center top-0 my-4">
                 <h1 className=" font-bold text-red-600/70 text-3xl font-mono "><FontAwesomeIcon icon={['far', 'star']}/>
                     장바구니 담아보기에요!
                     </h1>
                     <div className="font-bold text-purple-600/70 text-3xl" ><FontAwesomeIcon icon="fa-solid fa-cart-arrow-down"/></div>
-                </div>
+                </div>}
                 {loginUser ?<div className="flex flex-row w-[17rem] h-[80%] items-center m-0 justify-end">
                         <img src={loginUser.profileImgUrl ? loginUser.profileImgUrl : "/Image/defaultUser.jpg"} alt={"user"}
                         className="w-[2rem]"/><p className="font-mono text-md">{loginUser.userNickname}님</p>

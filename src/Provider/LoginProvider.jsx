@@ -15,7 +15,6 @@ export const LoginProvider=({children})=>{
             return res.data
         }).then(res=>{
             setLoginUser(res.data)
-            console.log(res.data)
             setIsLoading(false)
             }
         ).catch( ()=>{

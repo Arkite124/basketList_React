@@ -13,7 +13,7 @@ export function ModalProvider({ children }){
         // 예시: 모달 초기 설정 완료 후 isReady 설정
         setTimeout(() => {
             setModalReady(true);
-        }, 300); // 딜레이 예시
+        }, 300); // 딜레이
     }, []);
 
     const openModal=(title,content) => {
