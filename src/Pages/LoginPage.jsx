@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -8,18 +8,10 @@ import Loading from "../components/Loading.jsx";
 
 export default function LoginPage(){
     const serverURL="http://localhost:8000/api/userStatus/login"
-    const [, setLoginUser,isLoading]=useContext(LoginContext)
+    const [setLoginUser,isLoading]=useContext(LoginContext)
     const navigate=useNavigate()
     const [user,setUser]=useState({userName:"",current_password:""})
     const {openModal,closeModal}=useModalContext();
-    const [title,setTitle]=useState("유저 정보 오류")
-    const [content,setContent]=useState(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
-        <span className="text-bold text-red-500/70 text-2xl font-mono mb-5">아이디나 비밀번호가 <br/>
-            일치하지 않습니다. <br/> 혹은 존재하지 않는 유저입니다.</span>
-        <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
-                      onClick={closeModal}>돌아가기</button></span>
-    </div>)
     const [loadingUser,setLoadingUser]=useState(false)
     const inputHandler = (e) => {
         const {name, value} = e.target;
@@ -29,42 +21,44 @@ export default function LoginPage(){
     const loginHandler = async (e) =>{
         e.preventDefault()
         try {
-           await axios.post(serverURL,{
+            axios.post(serverURL,{
                 userName:user.userName,
                 password:user.current_password
-            })
-               .then(response=>{
+            },{withCredentials:true}).then((response)=>{
                 const userData=response.data
-                   console.log(userData)
+                  setLoginUser(userData)
                 setLoadingUser(true)
-                if(loadingUser){
-                setLoginUser(userData)
-                setTitle("로그인 성공")
-                setContent(<div className="flex flex-col items-center justify-center">
+            }).then(()=>{
+                    const newTitle=("로그인 성공")
+                    const newContent=(<div className="flex flex-col items-center justify-center">
                     <img src="/checked_icon.png" alt="성공!" className="w-[10rem] h-[10rem]"/>
         <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">로그인에 성공하였습니다!</span>
                     <span onClick={()=>navigate("/")}>
                         <button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                                   onClick={closeModal}>홈으로</button></span>
                 </div>)
-                }}
-            )
-        }catch (error) {
-            console.log(error.message)
-            setTitle("홈페이지 오류!")
-            setContent(<div className="flex flex-col items-center justify-center">
+                  setTimeout(()=> {openModal(newTitle, newContent)},1000)}).catch(async ()=>{
+                if(loadingUser){const wrongTitle="로그인 오류"
+                const wrongContent=(<div className="flex flex-col items-center justify-center">
+                    <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+                    <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">아이디나 비밀번호가 틀렸습니다!</span>
+                    <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+                                  onClick={closeModal}>돌아가기</button></span>
+                </div>)
+                setTimeout(()=>{openModal(wrongTitle,wrongContent)},1000)}
+            })}catch (error){const errorTitle=("서버 오류!")
+            const errorContent=(<div className="flex flex-col items-center justify-center">
                 <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
-        <span className="text-bold text-red-500/70 text-2xl font-mono mb-5">알수 없는 오류가 발생하였습니다.</span>
+                <input type="hidden" value={error}/>
+                <span className="text-bold text-red-500/70 text-2xl font-mono mb-5">알수 없는 오류가 발생하였습니다.</span>
                 <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                               onClick={closeModal}>돌아가기</button></span>
             </div>)
-            openModal(title,content)
-        }finally {
-            openModal(title,content)
-        }
+            setTimeout(()=>{openModal(errorTitle,errorContent)},1000)}
     }
-    if(!isLoading) return <Loading message={"로그인 창"}/>
-    if(isLoading) return(
+
+    if(isLoading===true) return <Loading message={"로그인 창"}/>
+    return(
     <div className="flex flex-col top-[4rem] absolute w-full items-center h-[75%]">
         <h2 className="text-3xl text-bold font-mono text-blue-900/40 mb-3">로그인 하기</h2>
         <form className="w-0.75 flex flex-col h-full">

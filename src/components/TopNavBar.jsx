@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useContext, useEffect, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import axios from "axios";
-import {ModalProvider, useModalContext} from "../Provider/ModalProvider.jsx";
+import {useModalContext} from "../Provider/ModalProvider.jsx";
 
 export function TopNavBar() {
     const [loginUser,setLoginUser]=useContext(LoginContext)
@@ -11,14 +11,29 @@ export function TopNavBar() {
     const navigate=useNavigate()
     const serverUrl="http://localhost:8000/api/userStatus/logout"
     const [content,setContent]=useState(InitializeCont)
-    const LogOut=async () => {
+    const modalTitle="로그아웃 확인"
+    const modalContent=(<div className="flex flex-col items-center justify-center">
+        <img src="/checked_icon.png" alt="성공!" className="w-[10rem] h-[10rem]"/>
+        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">로그아웃 하였습니다!</span>
+        <span onClick={()=>navigate("/")}>
+                        <button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+                                onClick={closeModal}>홈으로</button></span>
+    </div>)
+    const LogOut=async (e) => {
+        e.preventDefault()
         axios.post(serverUrl,{
         },{
             withCredentials:true
         }).then(
-            res=>setLoginUser(res.data)
+            res=>{
+                setLoginUser(res.data)
+                openModal(modalTitle,modalContent)
+            }
         ).then(()=>navigate("/")).catch(
-            ()=> setLoginUser(null)
+            ()=> {
+                setLoginUser(null)
+
+            }
         )
     }
     function InitializeCont(){
