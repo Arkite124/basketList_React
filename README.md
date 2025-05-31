@@ -33,3 +33,8 @@ font-awesome, googleFont 설치 및 아이콘 적용 및 폰트 알아보다 끝
 ProductName을 통해 고유 수량을 부여받음 로그아웃 버튼 누르면 로그아웃 모달 뜨면서 Home 으로 이동 되게 함, 전체 수량이 0미만 10이상으로
 조절되지 않게끔 유도함(modal을 띄움) loginUser 이면 기본적으로 수량과 담기,사기 버튼이 보이는데, user.role이 SELLER인 경우에도 안보이게
 설정함. login이 됬을때 modal이 안뜨는 오류가 생겨서 수정해야 함.
+11. cartList : BottomNavBar를 두개로 분리, 하나는 버튼누르면 나오는 장바구니 리스트, 하나는 fixed 형태로 floating 상태인
+정통 sideNavBar 두개로 분리해서 버튼 눌렀을때 나오는 장바구니는 간소화, sideNavBar 형태로 나와서 들어갈 수 있는 장바구니 링크는 세세한 내역
+그리고 sideNavBar에 구현하고자 하는 메뉴들은 이동하는 링크(navigate)로 들어가는 myInfo와 cartList,
+컴포넌트 시험은 안해봐서 아직 오류상태 자체는 모름 일단 구현만 해놓고 commit 후 오류 날 시 수정은 다음번에... 
+추후 sideNavBar에 구현할 SELLER는 안보이는 구매내역(매우 나중), BUYER는 안보이는 판매 등록, 수정, 삭제 링크 

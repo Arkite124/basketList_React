@@ -25,7 +25,7 @@ export default function HomePage(){
 
     return(
         <div className="flex flex-col items-center justify-center w-[90%] md:w-full h-full">
-            <h1 className=" font-bold text-emerald-500 text-3xl font-mono "><FontAwesomeIcon icon={['far', 'star']}/>
+            <h1 className="font-bold text-emerald-500 text-3xl font-mono"><FontAwesomeIcon icon={['far', 'star']}/>
                 장바구니 담아보기에요!
             </h1>
             <h2 className="text-bold text-blue-500/70 text-4xl font-mono mt-2">상품 미리보기</h2>

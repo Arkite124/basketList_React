@@ -108,6 +108,7 @@ export default function ShoppingPage(){
                     }
                     handleChange(productName, cartQty - 1);
                 };
+                const FormatPrice=product.productPrice.toLocaleString('ko-KR')
                return (
                     <div key={product.productId} className={categoryClassName[product.productCategory]}>
                         <div className="flex flex-col justify-center items-center pt-10 h-[15rem]">
@@ -116,7 +117,7 @@ export default function ShoppingPage(){
                         <div className="w-0.9 h-[50%] flex flex-col justify-center">
                             <span className="text-xl font-mono font-semibold text-neutral-900 my-0.5">{product.productName}</span>
                             <span className="text-xl font-mono font-semibold text-cyan-900 my-0.5">남은 갯수 : {product.productQuantity}</span>
-                            <span className="text-xl font-mono font-semibold text-purple-900 my-0.5">가격 : {product.productPrice}</span>
+                            <span className="text-xl font-mono font-semibold text-purple-900 my-0.5">가격 : {FormatPrice}</span>
                             <span className="text-xl font-mono font-semibold text-indigo-900 my-0.5 whitespace-nowrap">판매자 : {product.users.userNickname}</span>
                         </div>
                             {loginUser && loginUser.role!=="SELLER" ?
