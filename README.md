@@ -38,3 +38,6 @@ ProductName을 통해 고유 수량을 부여받음 로그아웃 버튼 누르�
 그리고 sideNavBar에 구현하고자 하는 메뉴들은 이동하는 링크(navigate)로 들어가는 myInfo와 cartList,
 컴포넌트 시험은 안해봐서 아직 오류상태 자체는 모름 일단 구현만 해놓고 commit 후 오류 날 시 수정은 다음번에... 
 추후 sideNavBar에 구현할 SELLER는 안보이는 구매내역(매우 나중), BUYER는 안보이는 판매 등록, 수정, 삭제 링크 
+12. bottomNavBar : Dialog를 이용, 밑 장바구니 내역(cartListBottom) 불러오는 포맷(나중에 cartItemList 불러오는 거 완성했을때 같이 완성)만 완성,
+사이드 navBar 옵션 자체는 로그인한 유저만 보이게, 로그인한 유저의 역할에 따라서 사이드 navBar 에 나오는 메뉴가 달라짐
+회원가입 중복체크만 짜고 폼은 아직 안만듬, fontAwesome 에서 아이콘 몇개 가지고 옴(여태껏 가져온 아이콘은 전부 free 버전)

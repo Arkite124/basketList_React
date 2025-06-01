@@ -8,21 +8,24 @@ export default function CartListBottomNavBar(){
     const [bottomOpen,setBottomOpen]=useState(false)
     const [btnIcon,setBtnIcon]=useState(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)
 
-    if(!loginUser) return(
+    if(!loginUser || loginUser.role==="SELLER") return(
         <div className="w-full h-full">
             <span onClick={()=>setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-down"/>)}>
-                <button type="button" className="h-[3rem] w-[3rem] text-sky-500 text-lg" onClick={()=>{setBottomOpen(true)}}>{btnIcon}</button></span>
-        <Dialog open={bottomOpen} Onclose={bottomOpen===false}>
+                <button type="button" className="fixed inset-x-0 bottom-[1rem] h-[2rem] w-[5rem] bg-amber-200 rounded-t-lg border-b-2 border-blue-400 text-sky-500 text-lg" onClick={()=>{setBottomOpen(true)}}>{btnIcon}</button></span>
+            <span className="fixed w-full bottom-0 h-[1rem] rounded-tr-lg bg-amber-200"></span>
+        <Dialog open={bottomOpen} onClose={()=>{setBottomOpen(false)
+            setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)}}>
             <div
-                className="fixed inset-0 bg-black bg-opacity-40 w-full h-full"
+                className="fixed inset-0 bg-black bg-opacity-50 w-full h-full"
                 aria-hidden="true"
             >
-        <div className="w-full flex flex-col justify-start z-20">
+        <div className="absolute inset-x-0 bottom-0 w-full h-full flex flex-col justify-end z-20">
+            <button type="button" className=" h-[2rem] w-[5rem] border-b-2 rounded-t-lg bg-amber-200 border-blue-400 text-sky-500 text-lg transition-discrete delay-300 duration-600 ease-in-out" onClick={()=>{setBottomOpen(false)}}>{btnIcon}</button>
             <Dialog.Panel className="w-full h-[20rem]">
-                <div className="flex flex-col w-full h-full justify-center items-center bg-amber-200 p-2">
-                    <h2 className="font-bold text-blue-500 text-3xl font-mono">비로그인시 장바구니 리스트 없음!</h2>
+                <div className="flex flex-col w-full h-full justify-center items-center bg-amber-200 rounded-tr-lg p-2">
+                    <h2 className="font-bold text-blue-500 text-3xl font-mono mb-1">비로그인시,역할이 판매자일시 장바구니 리스트 없음!</h2>
                     <span onClick={()=>setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)}>
-                        <button type="button" className="h-[3rem] w-[3rem] text-sky-500 text-lg" onClick={()=>{setBottomOpen(false)}}>장바구니 접기</button></span>
+                        <button type="button" className="h-[3rem] w-[10rem] border-2 rounded-lg border-blue-400 text-sky-500 text-lg" onClick={()=>{setBottomOpen(false)}}>장바구니 접기</button></span>
                 </div>
             </Dialog.Panel>
         </div>
@@ -31,8 +34,28 @@ export default function CartListBottomNavBar(){
         </div>
     )
     return (
-        <>
-            <h1>바텀 navBar (평소엔 숨겨져 있다가 여기다 장바구니 리스트 간소화 및 삭제 버튼 및 totalPrice)</h1>
-        </>
+        <div className="w-full h-full">
+            <span onClick={()=>setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-down"/>)}>
+                <button type="button" className="fixed inset-x-0 bottom-[1rem] h-[2rem] w-[5rem] bg-amber-200 rounded-t-lg text-sky-500 text-lg border-b-2 border-blue-400 z-1" onClick={()=>{setBottomOpen(true)}}>{btnIcon}</button></span>
+            <span className="fixed w-full bottom-0 h-[1rem] rounded-tr-lg bg-amber-200"></span>
+            <Dialog open={bottomOpen} onClose={()=>{setBottomOpen(false)
+                setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)}}>
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-10 w-full h-full transition delay-150 duration-300"
+                    aria-hidden="true"
+                >
+                    <div className="absolute inset-x-0 bottom-0 w-full h-full flex flex-col justify-end z-20">
+                        <button type="button" className=" h-[2rem] w-[5rem] border-b-2 rounded-t-lg bg-amber-200 border-blue-400 text-sky-500 text-lg" onClick={()=>{setBottomOpen(false)}}>{btnIcon}</button>
+                        <Dialog.Panel className="w-full h-[20rem]">
+                            <div className="flex flex-col w-full h-full justify-center items-center bg-amber-200 p-2">
+                                <h2 className="font-bold text-blue-500 text-3xl font-mono mb-1">로그인한 유저 장바구니 테스트</h2>
+                                <span onClick={()=>setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)}>
+                        <button type="button" className="h-[3rem] w-[10rem] border-2 rounded-lg border-blue-400 text-sky-500 text-lg" onClick={()=>{setBottomOpen(false)}}>장바구니 접기</button></span>
+                            </div>
+                        </Dialog.Panel>
+                    </div>
+                </div>
+            </Dialog>
+        </div>
     )
 }
