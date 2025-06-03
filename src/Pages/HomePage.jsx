@@ -32,7 +32,7 @@ export default function HomePage(){
             <h2 className="text-bold text-blue-500/70 text-4xl font-mono mt-2">상품 미리보기</h2>
             {isLoading && <Loading/>}
             {error && <span className="font-extrabold text-red-500 text-3xl font-mono">오류가 있어 상품목록을 불러올 수 없습니다.</span>}
-            <div className="flex flex-row w-full overflow-x-scroll overflow-x-hidden md:justify-center md:overflow-hidden">
+            <div className="flex flex-row w-full overflow-x-scroll md:justify-center md:overflow-hidden">
             {product && product.map(product => {
                return (
                 <div key={product.productId} className={categoryClassName[product.productCategory]}>

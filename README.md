@@ -41,3 +41,4 @@ ProductName을 통해 고유 수량을 부여받음 로그아웃 버튼 누르�
 12. bottomNavBar : Dialog를 이용, 밑 장바구니 내역(cartListBottom) 불러오는 포맷(나중에 cartItemList 불러오는 거 완성했을때 같이 완성)만 완성,
 사이드 navBar 옵션 자체는 로그인한 유저만 보이게, 로그인한 유저의 역할에 따라서 사이드 navBar 에 나오는 메뉴가 달라짐
 회원가입 중복체크만 짜고 폼은 아직 안만듬, fontAwesome 에서 아이콘 몇개 가지고 옴(여태껏 가져온 아이콘은 전부 free 버전)
+13. signup : 회원가입 폼만 만듬 스프링에서는 서비스단계까지 false,true 리턴 제대로 오는걸 봤는데 여기서는 작동하질 않음

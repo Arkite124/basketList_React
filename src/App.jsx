@@ -3,9 +3,9 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomeLayout from "./layout/HomeLayout.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import LoginPage from "./Pages/LoginPage.jsx";
-import RegisterPage from "./Pages/Register/RegisterPage.jsx";
-import ShoppingPage from "./Pages/shopping/ShoppingPage.jsx";
-import ShoppingDetailPage from "./Pages/shopping/ShoppingDetailPage.jsx";
+import SignupPage from "./Pages/Signup/SignupPage.jsx";
+import ShoppingPage from "./Pages/Shopping/ShoppingPage.jsx";
+import ShoppingDetailPage from "./Pages/Shopping/ShoppingDetailPage.jsx";
 import CartMainPage from "./Pages/CartItemList/CartMainPage.jsx";
 import UserInfoPage from "./Pages/Users/UserInfoPage.jsx";
 import UserDetailPage from "./Pages/Users/UserDetailPage.jsx";
@@ -13,8 +13,8 @@ import UserWishListPage from "./Pages/Users/UserWishListPage.jsx";
 import {useContext} from "react";
 import {LoginContext} from "./Provider/LoginProvider.jsx";
 import BigLoading from "./components/BigLoading.jsx";
-import ShoppingUploadPage from "./Pages/shopping/ShoppingUploadPage.jsx";
-import ShoppingSearchResult from "./Pages/shopping/ShoppingSearchResult.jsx";
+import ShoppingUploadPage from "./Pages/Shopping/ShoppingUploadPage.jsx";
+import ShoppingSearchResult from "./Pages/Shopping/ShoppingSearchResult.jsx";
 
 function App() {
   const [isLoading]=useContext(LoginContext)
@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route element={<HomeLayout/>}>
         <Route path={"/"} element={<HomePage/>}/>
-        <Route path={"/register"} element={<RegisterPage/>}/>
+        <Route path={"/signup"} element={<SignupPage/>}/>
         <Route path={"/login"} element={<LoginPage/>}/>
 
           <Route path={"/shopping"}>

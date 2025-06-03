@@ -3,26 +3,24 @@ import axios from "axios";
 const serverURL="http://localhost:8000/api/userStatus/register"
 // const serverURL="/api/userStatus/register" // 배포용 주소
 
-export function CheckUserName({userName}){
-    axios.post(`${serverURL}/check-userName`,{
-        userName:userName
-    }).then(res=>{
+export function CheckUserName(userName){
+    axios.post(`${serverURL}/check-userName`,
+        `${userName}`).then(res=>{
         const checkUserNameData=res.data
-        console.log("중복확인")
         return checkUserNameData
     }).catch((error)=>{
         console.log("name:"+error.message)
         console.log(error.status)
         return "오류발생";
         })}
-export function CheckUserNickname({userNickname}){
+export function CheckUserNickname(userNickname){
     axios.get(
         `${serverURL}/check-nickname`,{
             params:{userNickname}
         }).then(
         response=>{
             const checkNicknameData=response.data
-            console.log("중복확인")
+            console.log("중복확인"+checkNicknameData)
             return checkNicknameData
         }
     ).catch(error=>{
@@ -48,7 +46,7 @@ export function CheckPwCorrect({password,confirmPassword}){
         return "오류발생";
     })
 }
-export function CheckEmail({email}){
+export function CheckEmail(email){
     axios.post(`${serverURL}/check-email`,{
         email:email
     }).then(
@@ -63,7 +61,7 @@ export function CheckEmail({email}){
         return "오류발생";
     })
 }
-export function CheckPhone({phone}){
+export function CheckPhone(phone){
     axios.post(`${serverURL}/check-phone`,{
         phone:phone
     }).then(
@@ -78,7 +76,7 @@ export function CheckPhone({phone}){
         return "오류발생";
     })
 }
-export function CheckPrivacyAgreements({privacyAgreements}){
+export function CheckPrivacyAgreements(privacyAgreements){
     axios.post(`${serverURL}/check-privacyAgreements`,{
         privacyAgreements:privacyAgreements
     }).then(

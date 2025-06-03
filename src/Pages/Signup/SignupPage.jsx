@@ -1,0 +1,173 @@
+import React, {useEffect, useState} from "react";
+import {
+    CheckPwCorrect, CheckUserName,
+    CheckUserNickname
+} from "./SignupUtil/Signup.js";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+
+export default function SignupPage(){
+    const [confirmPassword,setConfirmPassword]=useState(null)
+    const [user,setUser]=useState({
+        userName:"",
+        password:"",
+        profileImgUrl:"",
+        userNickname:"",
+        selfIntroduction:"",
+        role:"",
+        email:"",
+        phone:"",
+        privacyAgreements:"",
+        marketingAgreements:"",
+        birthDate:"",
+        name:""
+    })
+    // CheckUserNickname({userNickname})
+    // CheckPwCorrect({password,confirmPassword})
+    const inputHandler = (e) => {
+        const {name, value} = e.target;
+        setUser(prev => ({...prev, [name]: value}));
+    };
+        const {data:checkId}=useQuery({
+            queryKey:["checkId"],
+            queryFn:()=>CheckUserName(user.userName),
+            staleTime:360000,
+            cacheTime:360000,
+            enabled:!!user.userName,
+        })
+
+    return(
+        <div className="flex flex-col justify-center items-center md:w-full">
+            <h2 className="text-3xl text-bold font-mono text-blue-900/40">회원가입 페이지</h2>
+            <div className="flex flex-row justify-center items-center md:w-full">
+            <span className="text-red-500">*</span> &nbsp;표시 되어 있는 항목들은 필수항목 입니다.
+            </div>
+            <form className="w-0.9 md:w-[50%] flex flex-col h-full my-2">
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"><span className="text-red-500">*</span>&nbsp;아이디 :</span>
+                    <input type="text" name="userName" onChange={(e) => inputHandler(e)}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                    <button type="button"
+                            className="w-[6.5rem] h-[2rem] ml-2 border border-slate-300 rounded-lg bg-slate-200 text-black text-sm md:text-md
+                             font-mono hover:bg-slate-700 hover:text-white hover:border-transparent"
+                            onClick={() => {
+                                CheckUserName(user.userName)
+                            }}>
+                        중복확인
+                    </button>
+                </label>
+                <div className="flex flex-row justify-center items-center h-[1rem]">
+                    {checkId && checkId.map((check)=>
+                    {return (check.checkName ? <span className="font-extrabold text-red-400 text-sm md:text-md font-mono">{check.nameMessage}</span> :
+                        <span className="font-extrabold text-green-400 text-sm md:text-md font-mono">{check.nameMessage}</span>)})}
+                </div>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"><span className="text-red-500">*</span>&nbsp;비밀번호 :</span>
+                    <input type="password" name="password" onChange={(e) => {inputHandler(e)}}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"><span className="text-red-500">*</span>&nbsp;비밀번호 확인 :</span>
+                    <input type="password" name="confirmPassword" onChange={(e) => {
+                        setConfirmPassword(e.target.value)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <div className="flex flex-row justify-center items-center h-[1rem]">
+                    {CheckPwCorrect.checkPw===false ? <span className="font-extrabold text-red-400 text-sm md:text-md font-mono">{CheckPwCorrect.pwMessage}</span> :
+                        <span className="font-extrabold text-green-400 text-sm md:text-md font-mono">{CheckPwCorrect.pwMessage}</span>}
+                </div>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full">프로필 이미지 :</span>
+                    <input type="password" name="confirmPassword" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full">이메일 : </span>
+                    <input type="email" name="email" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full">
+                        <span className="text-red-500">*</span>&nbsp;핸드폰 번호 :</span>
+                    <input type="phone" name="phone" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-col items-center my-2 w-full h-[3.2rem] justify-start font-mono">
+                    <span className="flex items-center justify-start w-[70%] md:w-[40%] h-full text-purple-500 text-xl md:text-2xl">
+                        <span className="text-red-500 flex justify-end text-xl">*&nbsp;</span>개인정보 이용 동의 </span>
+                    <div className="flex flex-row items-center my-1 w-full h-full justify-center font-mono">
+                    <span className="font-extrabold text-green-400 text-md md:text-xl font-mono">
+                        <span className="font-extrabold text-blue-400 text-md md:text-xl font-mono">개인정보 이용동의</span>에 동의하시면 체크버튼을 눌러주세요</span>
+                    <input type="checkbox" name="privacyAgreements" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl overflow-hidden"/>
+                    </div>
+                </label>
+                <label className="flex flex-col items-center my-2 w-full h-[5rem] justify-start font-mono">
+                    <span className="font-extrabold flex items-center justify-center w-[70%] md:w-[40%] h-full text-purple-500 text-xl md:text-2xl"> 마케팅 이용 동의 </span>
+                    <div className="flex flex-row items-center my-1 w-full h-full justify-center font-mono">
+                    <span className="font-extrabold text-green-400 text-md md:text-xl font-mono">
+                        <span className="font-extrabold text-blue-400 text-md md:text-xl font-mono">마케팅 이용동의</span>에 동의하시면 체크버튼을 눌러주세요</span>
+                    <input type="checkbox" name="marketingAgreements" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl overflow-hidden"/>
+                    </div>
+                    <div className="font-extrabold text-sky-500 text-md md:text-xl font-mono flex flex-center mb-1">링크를 누르시면 약관 내용을 볼 수 있습니다!</div>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"><span className="text-red-500 flex justify-end text-xl">*&nbsp;</span>생년월일 :</span>
+                    <input type="date" name="birthDate" onChange={(e) => {
+                        e.target.value
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full">
+                        <span className="text-red-500 flex justify-end text-xl">*&nbsp;</span>이름 :</span>
+                    <input type="text" name="name" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[55%] h-[20rem] md:h-full min-h-[40%] overflow-scroll"/>
+                </label>
+                <label className="flex flex-row items-center my-2 w-full h-[8rem] justify-start font-mono">
+                    <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"> 자기소개 :</span>
+                    <textarea name="selfIntroduction" onChange={(e) => {
+                        inputHandler(e)
+                    }}
+                           className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
+            focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem] resize-none
+            font-sans my-2 min-w-2xs max-w-6xl w-[55%] h-full overflow-hidden"/>
+                </label>
+
+            </form>
+        </div>
+    )
+}

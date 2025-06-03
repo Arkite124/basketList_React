@@ -76,7 +76,7 @@ export function TopNavBar() {
                         <button className="w-[5.5rem] h-[2.5rem] rounded-lg bg-sky-300 text-black/90 mr-2.5 hover:bg-sky-400 hover:text-white font-mono">
                             <FontAwesomeIcon icon="fa-solid fa-right-to-bracket"/>로그인</button>
                     </Link>
-                    <Link to="/register">
+                    <Link to="/signup">
                         <button className="w-[5.5rem] h-[2.5rem] rounded-lg bg-blue-300 text-black mr-2.5 font-mono hover:bg-blue-400 hover:text-white">회원가입</button>
                     </Link>
                 </div>}
