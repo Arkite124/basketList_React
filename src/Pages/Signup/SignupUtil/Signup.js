@@ -3,95 +3,47 @@ import axios from "axios";
 const serverURL="http://localhost:8000/api/userStatus/register"
 // const serverURL="/api/userStatus/register" // 배포용 주소
 
-export function CheckUserName(userName){
-    axios.post(`${serverURL}/check-userName`,
-        `${userName}`).then(res=>{
-        const checkUserNameData=res.data
-        return checkUserNameData
-    }).catch((error)=>{
-        console.log("name:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-        })}
+export function CheckUserName(userName) {
+     return  axios.post(`${serverURL}/check-userName`,
+        {userName}, {
+            headers: {"Content-Type": "application/json"}
+        });}
+//ID 중복 체크 완료
 export function CheckUserNickname(userNickname){
-    axios.get(
+   return axios.get(
         `${serverURL}/check-nickname`,{
-            params:{userNickname}
-        }).then(
-        response=>{
-            const checkNicknameData=response.data
-            console.log("중복확인"+checkNicknameData)
-            return checkNicknameData
-        }
-    ).catch(error=>{
-        console.log("nickName:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-    })}//닉네임 중복체크
+            params:{userNickname},
+            headers: {"Content-Type": "application/json"}
+        })}
+//닉네임 중복체크
 export function CheckPwCorrect({password,confirmPassword}){
-    axios.post(
+   return axios.post(
         `${serverURL}/check-password`,{
             password:password,
             confirmPassword:confirmPassword
-        }
-    ).then(
-        response=>{
-            const checkPwData=response.data
-            console.log("일치확인")
-            return checkPwData
-        }
-    ).catch(error=>{
-        console.log("checkPw:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-    })
-}
-export function CheckEmail(email){
-    axios.post(`${serverURL}/check-email`,{
+        }, {
+           headers: {"Content-Type": "application/json"}
+       })}
+//비밀번호 일치 확인
+export async function CheckEmail(email){
+    return axios.post(`${serverURL}/check-email`,{
         email:email
-    }).then(
-        res=>{
-            const checkEmailData=res.data
-            console.log("일치확인")
-            return checkEmailData
-        }
-    ).catch(error=>{
-        console.log("Email:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-    })
-}
-export function CheckPhone(phone){
-    axios.post(`${serverURL}/check-phone`,{
+    },{
+        headers: {"Content-Type": "application/json"}
+    })}
+//이메일 중복 확인
+export async function CheckPhone(phone){
+   return axios.post(`${serverURL}/check-phone`,{
         phone:phone
-    }).then(
-        res=>{
-            const checkPhoneData=res.data
-            console.log("일치확인")
-            return checkPhoneData
-        }
-    ).catch(error=>{
-        console.log("Phone:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-    })
-}
-export function CheckPrivacyAgreements(privacyAgreements){
-    axios.post(`${serverURL}/check-privacyAgreements`,{
-        privacyAgreements:privacyAgreements
-    }).then(
-        res=>{
-            const checkPrivacyAgreementsData=res.data
-            console.log("동의확인")
-            return checkPrivacyAgreementsData
-        }).catch(error=>{
-        console.log("PrivacyAgreements:"+error.message)
-        console.log(error.status)
-        return "오류발생";
-    })
-}
-//요까지 중복체크
-export function SignUpUser({user}){
+    },{
+       headers: {"Content-Type": "application/json"}
+   })}
+//핸드폰 중복 확인 여기까지 중복체크
+export async function CheckPrivacyAgreements(privacyAgreements){
+   return axios.post(`${serverURL}/check-privacyAgreements`,
+        (privacyAgreements))}
+//개인정보 이용동의 확인
+export async function SignUpUser({user}){
     axios.post(`${serverURL}/user`,{
         user
     }).then(
