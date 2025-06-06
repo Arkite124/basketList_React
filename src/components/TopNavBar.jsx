@@ -65,7 +65,7 @@ export function TopNavBar() {
                     <div className="font-bold text-purple-600/70 text-3xl" ><FontAwesomeIcon icon="fa-solid fa-cart-arrow-down"/></div>
                 </div>}
                 {loginUser ?<div className="flex flex-row w-[17rem] h-[80%] items-center m-0 justify-end">
-                        <img src={loginUser.profileImgUrl ? loginUser.profileImgUrl : "/Image/defaultUser.jpg"} alt={"user"}
+                        <img src={loginUser.profileImgUrl ? loginUser.profileImgUrl : "/Image/userProfileImg/defaultUser.jpg"} alt={"user"}
                         className="w-[2rem]"/><p className="font-mono text-md">{loginUser.userNickname}님</p>
                         <button className="w-[5.5rem] h-[2.5rem] rounded-lg bg-sky-300 text-black/90 mr-2.5 text-sm hover:bg-sky-400 hover:text-white font-mono"
                         onClick={LogOut}>

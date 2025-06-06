@@ -17,13 +17,14 @@ export function CheckUserNickname(userNickname){
         })}
 //닉네임 중복체크
 export function CheckPwCorrect({password,confirmPassword}){
-   return axios.post(
-        `${serverURL}/check-password`,{
-            password:password,
-            confirmPassword:confirmPassword
-        }, {
-           headers: {"Content-Type": "application/json"}
-       })}
+       return axios.post(
+           `${serverURL}/check-password`, {
+               password: password,
+               confirmPassword: confirmPassword
+           }, {
+               headers: {"Content-Type": "application/json"},
+           })
+}
 //비밀번호 일치 확인
 export async function CheckEmail(email){
     return axios.post(`${serverURL}/check-email`,{
@@ -41,7 +42,9 @@ export async function CheckPhone(phone){
 //핸드폰 중복 확인 여기까지 중복체크
 export async function CheckPrivacyAgreements(privacyAgreements){
    return axios.post(`${serverURL}/check-privacyAgreements`,
-        (privacyAgreements))}
+       {privacyAgreements:privacyAgreements},{
+           headers: {"Content-Type": "application/json"}
+       })}
 //개인정보 이용동의 확인
 export async function SignUpUser({user}){
     axios.post(`${serverURL}/user`,{
