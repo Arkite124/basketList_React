@@ -13,7 +13,7 @@ export function TopNavBar() {
     const [content,setContent]=useState(InitializeCont)
     const modalTitle="로그아웃 확인"
     const modalContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/checked_icon.png" alt="성공!" className="w-[10rem] h-[10rem]"/>
+        <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">로그아웃 하였습니다!</span>
         <span onClick={()=>navigate("/")}>
                         <button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"

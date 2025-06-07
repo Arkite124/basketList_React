@@ -33,9 +33,9 @@ export function ModalProvider({ children }) {
                         className="fixed inset-0 bg-black bg-opacity-40"
                         aria-hidden="true"
                     >
-                        <div className="fixed inset-0 flex h-[50rem] items-center justify-center p-[0.3rem] bg-green-300/10">
+                        <div className="fixed inset-0 flex h-[50%] items-center justify-center p-[0.3rem] bg-green-300/10">
                             <Dialog.Panel
-                                className="relative top-0 h-[25rem] bg-white rounded-md p-[1rem]
+                                className="relative top-[25%] md:top-[35%] h-full md:h-[35rem] bg-white rounded-md p-[1rem]
                  min-w-sm max-w-lg w-3/4 shadow-gray-700-lg flex flex-col items-center"
                             >
                                 <button
@@ -45,7 +45,7 @@ export function ModalProvider({ children }) {
                                     X
                                 </button>
                                 <Dialog.Title
-                                    className="flex flex-col text-3xl text-black font-mono text-blue-900 pb-3 items-center justify-center w-full"
+                                    className="flex flex-col text-2xl md:text-3xl text-black font-mono text-blue-900 pb-3 items-center justify-center w-full"
                                 >
                                     {modalTitle}
                                 </Dialog.Title>

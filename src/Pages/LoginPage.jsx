@@ -17,9 +17,9 @@ export default function LoginPage(){
         const {name, value} = e.target;
         setUser(prev => ({...prev, [name]: value}));
     };
-    const newTitle=("로그인 성공")
-    const newContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/checked_icon.png" alt="성공!" className="w-[10rem] h-[10rem]"/>
+    const loginTitle=("로그인 성공")
+    const loginContent=(<div className="flex flex-col items-center justify-center">
+        <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">로그인에 성공하였습니다!</span>
         <span onClick={()=>navigate("/")}>
                         <button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
@@ -27,14 +27,14 @@ export default function LoginPage(){
     </div>)
     const wrongTitle="로그인 오류"
     const wrongContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">아이디나 비밀번호가 틀렸습니다!</span>
         <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
     const errorTitle=("서버 오류!")
     const errorContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-2xl font-mono mb-5">알수 없는 오류가 발생하였습니다.</span>
         <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                       onClick={closeModal}>돌아가기</button></span>
@@ -50,7 +50,7 @@ export default function LoginPage(){
                     setLoginUser(userData)
                     console.log("로그인 성공")
                     setLoadingUser(true)
-                    setTimeout(()=>{openModal(newTitle, newContent)},500)}).catch(async ()=>{
+                    setTimeout(()=>{openModal(loginTitle, loginContent)},500)}).catch(async ()=>{
                 if(!loadingUser){
                     setTimeout(()=>{openModal(wrongTitle,wrongContent)},500)}
             })}catch{
