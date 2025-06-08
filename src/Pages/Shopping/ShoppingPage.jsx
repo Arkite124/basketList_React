@@ -17,15 +17,15 @@ export default function ShoppingPage(){
     }
     const modalTitle="수량 제한"
     const modalMaximumContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">제한 수량을 초과하였습니다.</span>
-        <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+        <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
     const modalMinimumContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[10rem] h-[10rem]"/>
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">수량은 1미만이 될 수 없습니다.</span>
-        <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+        <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
     const queryClient=useQueryClient()

@@ -18,7 +18,7 @@ export default function SideBottomNavBar(){
         <Dialog open={sideOpen} onClose={()=>setSideOpen(false)} className="z-30">
         <div className="fixed inset-0 bg-black bg-opacity-40 h-full w-full"
              aria-hidden="true">
-            <div className="absolute inset-y-0 right-0 w-[40%] bg-emerald-50 rounded-xl">
+            <div className="absolute inset-y-0 right-0 w-[60%] md:w-[40%] bg-emerald-50 rounded-xl">
                 <Dialog.Panel className="w-full h-full flex flex-col rounded-xl">
                     <div className="w-full bg-emerald-50 h-full flex-col rounded-tl-xl">
                         <span className="w-full block text-ellipsis overflow-hidden border-b-2 h-[6.5rem] pt-2 hover:bg-teal-500 hover:rounded-tl-xl">

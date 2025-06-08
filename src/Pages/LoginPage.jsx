@@ -4,11 +4,13 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useModalContext} from "../Provider/ModalProvider.jsx";
 import Loading from "../components/Loading.jsx";
+import {useQueryClient} from "@tanstack/react-query";
 
 
 export default function LoginPage(){
     const serverURL="http://localhost:8000/api/userStatus/login"
     const [loginUser,setLoginUser,isLoading]=useContext(LoginContext)
+    const queryClient=useQueryClient()
     const navigate=useNavigate()
     const [user,setUser]=useState({userName:"",current_password:""})
     const {openModal,closeModal}=useModalContext();
@@ -22,21 +24,21 @@ export default function LoginPage(){
         <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">로그인에 성공하였습니다!</span>
         <span onClick={()=>navigate("/")}>
-                        <button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+                        <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                                 onClick={closeModal}>홈으로</button></span>
     </div>)
     const wrongTitle="로그인 오류"
     const wrongContent=(<div className="flex flex-col items-center justify-center">
         <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">아이디나 비밀번호가 틀렸습니다!</span>
-        <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+        <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
     const errorTitle=("서버 오류!")
     const errorContent=(<div className="flex flex-col items-center justify-center">
         <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
         <span className="text-bold text-red-500/70 text-2xl font-mono mb-5">알수 없는 오류가 발생하였습니다.</span>
-        <span><button className="w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+        <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
     const loginHandler = (e) =>{
@@ -49,6 +51,7 @@ export default function LoginPage(){
                 const userData=response.data
                     setLoginUser(userData)
                     console.log("로그인 성공")
+                    queryClient.getQueriesData(["cartList"])
                     setLoadingUser(true)
                     setTimeout(()=>{openModal(loginTitle, loginContent)},500)}).catch(async ()=>{
                 if(!loadingUser){

@@ -18,9 +18,13 @@ export async function GetCart(){
 }
 
 // 장바구니 아이템 한개 삭제
-export async function DeleteCartOne(){
-   return axios.delete(`${serverURL}`,{
-        withCredentials:true
+export async function DeleteCartOne(cartItemId){
+   return axios({
+       method:'delete',
+       url:`${serverURL}`,
+        data:{cartItemId:cartItemId},
+        withCredentials:true,
+       headers: {"Content-Type": "application/json"},
     })
 }
 
