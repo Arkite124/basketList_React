@@ -4,11 +4,12 @@ const serverURL="http://localhost:8000/api/cartItemList/myList"
 // const serverURL="/api/cartItemList/myList" // 서버 배포할 때 쓸 주소
 
 //장바구니에 아이템 넣기
-export async function InsertCart({productId, quantity}){
+export async function InsertCart(productId, quantity){
    return axios.post(`${serverURL}`,{
-        productId:productId,
+        productNo:productId,
         quantity:quantity
-    },{withCredentials:true})
+    },{withCredentials:true,
+       headers: {"Content-Type": "application/json"}})
 }
 // 장바구니 리스트 보기
 export async function GetCart(){

@@ -6,6 +6,7 @@ import Loading from "../../components/Loading.jsx";
 import {categoryClassName} from "../HomePage.jsx";
 import {LoginContext} from "../../Provider/LoginProvider.jsx";
 import {useModalContext} from "../../Provider/ModalProvider.jsx";
+import {InsertCart} from "../CartItemList/cartUtil/CartUtil.js";
 
 export default function ShoppingPage(){
     const [loginUser]=useContext(LoginContext)
@@ -28,6 +29,7 @@ export default function ShoppingPage(){
         <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
                       onClick={closeModal}>돌아가기</button></span>
     </div>)
+
     const queryClient=useQueryClient()
     const [keyword,setKeyword]=useState("")
      const [size,setSize]=useState(InitializeSize)
@@ -61,8 +63,8 @@ export default function ShoppingPage(){
         }
     ).catch(e=>e)
     const [cartQuantity,setCartQuantity]=useState({});
-    const handleChange = (productName,cartQuantity)=>{
-        setCartQuantity(num=>({...num,[productName]:cartQuantity}))
+    const handleChange = (productId,cartQuantity)=>{
+        setCartQuantity(num=>({...num,[productId]:cartQuantity}))
     }//상품별로 수량을 달리하기위한 기본 상태 정의
 
     useEffect(() => {
@@ -74,7 +76,7 @@ export default function ShoppingPage(){
             <div className="flex flex-row items-center justify-center my-3 w-full h-5">
                 <span className="w-[6rem] h-full font-mono text-indigo-600 mx-2 text-sm lg:text-xl"> 이름 검색</span>
             <input type="text" name="keyword" className="w-[20rem] h-0.8 font-mono mr-3" value={keyword} onChange={(e)=>{setKeyword(e.target.value)}}/>
-                <button onClick={()=>{navigate(`shopping/result/${keyword}`)}}
+                <button onClick={()=>{navigate(`result/${keyword}`)}}
                 className="border border-blue-200 w-[8rem] h-0.8 rounded-lg bg-sky-200 text-bold text-blue-400 text-xl hover:bg-blue-700 hover:text-white">검색</button>
             </div>
             <div className="flex flex-row font-mono mx-3 w-[25rem] rounded-md h-[14%] items-center justify-center">
@@ -88,26 +90,64 @@ export default function ShoppingPage(){
                     <option className="mx-1 text-emerald-600 text-md" value="stationery">문구류</option>
                 </select>
             </div>
-            <div className="w-[85%] h-[70%] flex flex-row flex-wrap">
+            <div className="w-full px-[10%] h-[70%] flex flex-row flex-wrap">
             {isLoading && <Loading message={"상품 리스트"}/>}
             {error && <span className="font-extrabold text-red-500 text-3xl font-mono">오류가 있어 상품목록을 불러올 수 없습니다.</span>}
             {product && product.map(product =>{
-                const productName = product.productName;
-                const cartQty = cartQuantity[productName] ?? 1;
+                const productId = product.productId;
+                const cartQty = cartQuantity[productId] ?? 1;
                 const handlePlus = () => { //10개 이상 됬을때 modal이 호출되도록 함
                     if (cartQty >= 10) {
                         openModal(modalTitle,modalMaximumContent);
                         return;
                     }
-                    handleChange(productName, cartQty + 1);
+                    handleChange(productId, cartQty + 1);
                 };
                 const handleMinus = () => { //1개 미만이 될수 없도록 함
                     if (cartQty <= 1) {
                         openModal(modalTitle, modalMinimumContent);
                         return;
                     }
-                    handleChange(productName, cartQty - 1);
+                    handleChange(productId, cartQty - 1);
                 };
+                const checkTitle="장바구니 담김 확인"
+                const addCartItem=()=>{
+                    try{
+                        InsertCart(productId, cartQty).then(res=>{
+                            res.status
+                            queryClient.invalidateQueries(["cartList"])
+                            return openModal(checkTitle, basketContent)
+                        }).catch(()=>openModal(checkTitle,alreadyExistsContent))
+                    }catch {openModal(checkTitle,ErrorContent)}
+                }
+                    const checkBasketContent=(<div className="flex flex-col items-center justify-center">
+                        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+                        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">정말 장바구니에 담으시겠습니까?</span>
+                        <span className="flex flex-row justify-between w-[80%]">
+            <button className="w-[40%] md:w-[7.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+                    onClick={closeModal}>돌아가기</button>
+        <span onClick={closeModal}><button className="w-[40%] md:w-[7.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+                onClick={addCartItem}>담기</button></span></span>
+                    </div>)
+                    const basketContent=(<div className="flex flex-col items-center justify-center">
+                        <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+                        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">장바구니에 담겼습니다.</span>
+                        <span>
+        <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+                onClick={closeModal}>돌아가기</button></span>
+                    </div>)
+                const alreadyExistsContent=(<div className="flex flex-col items-center justify-center">
+                    <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+                    <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">이미 장바구니에 담긴 항목입니다.</span>
+                    <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+                                  onClick={closeModal}>돌아가기</button></span>
+                </div>)
+                const ErrorContent=(<div className="flex flex-col items-center justify-center">
+                    <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+                    <span className="text-bold text-red-500/70 text-3xl font-mono mb-5">오류가 발생했습니다.</span>
+                    <span><button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-600 text-white text-xl font-mono hover:bg-red-400 hover:text-black"
+                                  onClick={closeModal}>돌아가기</button></span>
+                </div>)
                 const FormatPrice=product.productPrice.toLocaleString('ko-KR')
                return (
                     <div key={product.productId} className={categoryClassName[product.productCategory]}>
@@ -132,7 +172,7 @@ export default function ShoppingPage(){
                             </div>
                                     <div className="flex flex-row justify-between w-4/5 h-full">
                                         <span className="border-cyan-500 border-2 rounded-md bg-purple-300 hover:bg-cyan-500 hover:border-transparent
-                                        hover:text-white font-mono w-[5rem] flex justify-center"><button type="button">담기</button></span>
+                                        hover:text-white font-mono w-[5rem] flex justify-center"><button type="button" onClick={()=>{openModal(checkTitle,checkBasketContent)}}>담기</button></span>
                                         <span className="border-emerald-600 text-white border-2 rounded-md bg-purple-600 hover:bg-emerald-300 hover:border-transparent
                                         hover:text-black font-mono w-[5rem] flex justify-center"><button type="button">사기</button></span>
                                     </div>

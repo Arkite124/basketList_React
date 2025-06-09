@@ -6,38 +6,12 @@ import {useModalContext} from "../Provider/ModalProvider.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {DeleteCartOne, GetCart} from "../Pages/CartItemList/cartUtil/CartUtil.js";
 import Loading from "./Loading.jsx";
-import {categoryClassName} from "../Pages/HomePage.jsx";
 
 export default function CartListBottomNavBar(){
     const [loginUser]=useContext(LoginContext)
     const [bottomOpen,setBottomOpen]=useState(false)
-    const [checkDelete,setCheckDelete]=useState(false)
     const [btnIcon,setBtnIcon]=useState(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)
     const {openModal,closeModal}=useModalContext()
-    const checkDeleteTitle="삭제 확인" // modal 제목
-    const DeleteCheckOneContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
-        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">정말 삭제하시겠습니까?</span>
-        <span className="flex flex-row justify-between">
-            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mx-2 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-sky-400 hover:text-black"
-                    onClick={closeModal}>돌아가기</button>
-            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mx-2 rounded-lg bg-red-200 text-black text-xl font-mono hover:bg-red-500 hover:text-white"
-                    onClick={()=>setCheckDelete(true)}>삭제하기</button></span>
-        </div>) //삭제 재확인 modal 내용
-    const checkDeleteOneContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
-        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">성공적으로 삭제하였습니다!</span>
-        <span>
-            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-sky-600 hover:text-white"
-                    onClick={closeModal}>돌아가기</button></span>
-        </div>) //삭제 성공확인 modal 내용
-    const ErrorDeleteOneContent=(<div className="flex flex-col items-center justify-center">
-        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
-        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">삭제중 오류가 발생하였습니다.</span>
-        <span>
-            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
-                    onClick={closeModal}>돌아가기</button></span>
-        </div>) //삭제 실패확인 modal 내용
     const {data:cartList, isLoading, error}=useQuery({
         queryKey:["cartList"],
         queryFn:async ()=>{
@@ -49,13 +23,38 @@ export default function CartListBottomNavBar(){
         retry : 1,
         enabled : !!loginUser
     })
+    const checkDeleteTitle="삭제 확인" // modal 제목
+    const DeleteCheckOneContent=(<div className="flex flex-col items-center justify-center">
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">정말 삭제하시겠습니까?</span>
+        <span className="flex flex-row justify-between">
+            <button className="w-[40%] md:w-[7.5rem] h-[3rem] mx-2 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-sky-400 hover:text-black"
+                    onClick={closeModal}>돌아가기</button>
+            <button className="w-[40%] md:w-[7.5rem] h-[3rem] mx-2 rounded-lg bg-red-200 text-black text-xl font-mono hover:bg-red-500 hover:text-white"
+                    onClick={()=>setCheckDelete(true)}>삭제하기</button></span>
+    </div>) //삭제 재확인 modal 내용
+    const checkDeleteOneContent=(<div className="flex flex-col items-center justify-center">
+        <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">성공적으로 삭제하였습니다!</span>
+        <span>
+            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-sky-600 hover:text-white"
+                    onClick={closeModal}>돌아가기</button></span>
+    </div>) //삭제 성공확인 modal 내용
+    const ErrorDeleteOneContent=(<div className="flex flex-col items-center justify-center">
+        <img src="/alert_icon.png" alt="주의!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
+        <span className="text-bold text-blue-500/70 text-2xl font-mono mb-5">삭제중 오류가 발생하였습니다.</span>
+        <span>
+            <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
+                    onClick={closeModal}>돌아가기</button></span>
+    </div>) //삭제 실패확인 modal 내용
+    const [checkDelete,setCheckDelete]=useState(false)
     const DeleteCartItem= async ()=>{
-        openModal(checkDeleteTitle,checkDeleteOneContent)
+        openModal(checkDeleteTitle,DeleteCheckOneContent)
         if(checkDelete){
             try {
                 DeleteCartOne(cartList.cartItemId).then(res=> {
                         if (res.status !== 200) openModal(checkDeleteTitle, ErrorDeleteOneContent)
-                        if (res.status === 200) openModal(checkDeleteTitle, DeleteCheckOneContent)
+                        if (res.status === 200) openModal(checkDeleteTitle, checkDeleteOneContent)
                     }
                 ).catch(()=>{
                     openModal(checkDeleteTitle,ErrorDeleteOneContent)
@@ -135,8 +134,8 @@ export default function CartListBottomNavBar(){
                                             <span className={categoryClassText[list.products.productCategory]}>{list.quantity}</span>
 
                                             <span className={categoryClassText[list.products.productCategory]}>&#8361;{FormatSelectedPrice}</span>
-                                            <span className="m-1 p-1 h-[10%] w-[40%] md:h-[1.5rem] md:w-[20%] flex justify-center">
-                                                <button className="text-rose-700 bg-pink-300 border h-[10%] w-[50%] md:h-[1.5rem] md:w-[30%] border-rose-700 rounded-md md:rounded-lg text-sm md:text-md
+                                            <span className="m-1 p-1 h-[10%] w-[40%] md:h-[1.5rem] md:w-[20%] flex justify-center items-center">
+                                                <button className="text-rose-700 bg-pink-300 border h-[10%] w-[50%] md:h-[1.5rem] md:w-[50%] border-rose-700 rounded-md md:rounded-lg text-sm md:text-md
                                             flex justify-center hover:border-transparent hover:bg-rose-700 hover:text-pink-300" type="button" onClick={DeleteCartItem}>삭제하기</button></span>
                                         </div>)})}
                                 </div>

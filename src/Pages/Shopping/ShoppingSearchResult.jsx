@@ -8,7 +8,7 @@ import Loading from "../../components/Loading.jsx";
 import {categoryClassName} from "../HomePage.jsx";
 
 export default function ShoppingSearchResult(){
-    const keyword=useParams()
+    const {keyword}=useParams();
     const [loginUser]=useContext(LoginContext)
     const {openModal,closeModal}=useModalContext()
     function InitializeSize(){
@@ -41,16 +41,16 @@ export default function ShoppingSearchResult(){
     }, []);
     const [page,setPage]=useState(0)
     const{data:result,isLoading,error}=useQuery({
-        queryKey:["searchResult",keyword,page,size],
+        queryKey:["searchResult"],
         queryFn:async ()=> {
-            const res=await axios.get(`http://localhost:8000/api/product/list/${keyword}?page=${page}&size=${size}`)
-            return res.data
+            const res=await axios.get(`http://localhost:8000/api/product/list/result/${keyword}?page=${page}&size=${size}`)
+           return res.data.content
         },
         staleTime:60000,
         cacheTime:90000,
         retry : 1,
     })
-    const countTotal=() =>axios.get(`http://localhost:8000/api/product/list/total?keyword=${keyword}`)
+    const countTotal=() =>axios.get(`http://localhost:8000/api/product/list/result/total?keyword=${keyword}`)
         .then(res=>res.data)
     countTotal().then(
         data=>{
@@ -64,16 +64,17 @@ export default function ShoppingSearchResult(){
     } //상품별로 수량을 달리하기위한 기본 상태 정의
 
     useEffect(() => {
-        queryClient.invalidateQueries(["searchResult",keyword,page,size])
-    }, [keyword]);
+        queryClient.invalidateQueries(["searchResult"])
+    }, [page, queryClient, size]);
     return(
         <div className="flex flex-col items-center justify-center w-[100%] h-full">
             <h1 className="text-bold text-sky-300 text-2xl lg:text-3xl font-mono mt-3">검색 결과</h1>
             <div className="flex flex-col items-center justify-center my-3 w-full h-5">
-                <span className="w-[50%] md:w-[20rem] h-full font-mono text-indigo-600 mx-2 text-sm lg:text-xl flex flex-row">
-                    <span className="w-[20%] md:w-[3rem] h-full font-mono text-orange-500 mx-2 text-sm lg:text-xl flex flex-no-wrap text-elipsis">"{keyword}"</span>&nbsp;로 검색하신 검색 결과 입니다.</span>
+                <span className="w-full h-full font-mono text-indigo-600 mx-2 text-sm lg:text-xl flex flex-row justify-center">
+                    <span className="w-fit-content h-full font-mono text-orange-500 mx-2 text-sm lg:text-xl flex flex-no-wrap text-elipsis">
+                        "{keyword}"</span>&nbsp;로 검색하신 검색 결과 입니다.</span>
             </div>
-            <div className="w-[85%] h-[70%] flex flex-row flex-wrap">
+            <div className="w-[85%] h-[70%] flex flex-row flex-wrap justify-center">
                 {isLoading && <Loading message={"상품 리스트"}/>}
                 {error && <span className="font-extrabold text-red-500 text-3xl font-mono">오류가 있어 상품목록을 불러올 수 없습니다.</span>}
                 {result && result.map(product=>{
