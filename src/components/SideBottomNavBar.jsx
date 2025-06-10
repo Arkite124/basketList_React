@@ -2,6 +2,7 @@ import {useContext, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Dialog} from "@headlessui/react";
+import {Link} from "react-router-dom";
 
 export default function SideBottomNavBar(){
     const [loginUser]=useContext(LoginContext)
@@ -26,8 +27,8 @@ export default function SideBottomNavBar(){
                                 <span className="text-blue-500 group-hover:text-white"><FontAwesomeIcon icon="fa-solid fa-circle-info" /></span>&nbsp;내 정보</h2>
                         </span>
             {loginUser.role!=="SELLER" && (<span className="w-full block text-ellipsis overflow-hidden border-b-2 h-[6.5rem] hover:bg-teal-500">
-                            <h2 className="w-full text-teal-400 text-2xl lg:text-4xl h-full my-1 flex justify-center items-center hover:text-white">
-                                <FontAwesomeIcon icon="fa-solid fa-cart-arrow-down" /> &nbsp;내 장바구니</h2>
+                            <Link to={"/cartList"} className="w-full text-teal-400 text-2xl lg:text-4xl h-full my-1 flex justify-center items-center hover:text-white">
+                                <FontAwesomeIcon icon="fa-solid fa-cart-arrow-down" /> &nbsp;내 장바구니</Link>
                         </span>)}
             {loginUser.role!=="SELLER" && (  <span className="w-full block text-ellipsis overflow-hidden border-b-2 h-[6.5rem] hover:bg-teal-500">
                             <h2 className="group w-full text-teal-400 text-2xl lg:text-4xl h-full my-1 flex justify-center items-center hover:text-white">
