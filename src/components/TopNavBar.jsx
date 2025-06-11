@@ -31,6 +31,7 @@ export function TopNavBar() {
                 setLoginUser(res.data)
                 openModal(modalTitle,modalContent)
                 queryClient.invalidateQueries(["cartList"])
+                queryClient.invalidateQueries(["totalPrice"])
             }
         ).then(()=>navigate("/")).catch(
             ()=> {

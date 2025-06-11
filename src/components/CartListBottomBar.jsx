@@ -1,16 +1,17 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {LoginContext} from "../Provider/LoginProvider.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Dialog} from "@headlessui/react";
 import {useModalContext} from "../Provider/ModalProvider.jsx";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {DeleteCartOne, GetCart} from "../Pages/CartItemList/cartUtil/CartUtil.js";
+import {DeleteCartOne, GetCart, TotalPrice} from "../Pages/CartItemList/cartUtil/CartUtil.js";
 import Loading from "./Loading.jsx";
 
 export default function CartListBottomNavBar(){
     const [loginUser]=useContext(LoginContext)
     const [bottomOpen,setBottomOpen]=useState(false)
     const [btnIcon,setBtnIcon]=useState(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)
+
     const {openModal,closeModal}=useModalContext()
     const queryClient=useQueryClient();
     const {data:cartList, isLoading, error}=useQuery({
@@ -24,7 +25,18 @@ export default function CartListBottomNavBar(){
         retry : 1,
         enabled : !!loginUser
     })
-    const [checkDelete,setCheckDelete]=useState(false)
+    const [total,setTotal]=useState(0)
+    useEffect(() => {
+        if(loginUser!==null){
+            TotalPrice().then(
+                res => {
+                    setTotal(res.data)
+                }
+            )
+        }
+    }, [loginUser,queryClient]);
+    //totalPrice를 가져오기 위한 useState
+    const TotalPriceWon=total.toLocaleString('ko-KR')
     const categoryClassText={
         "alcohols":"text-gray-700 m-1 p-1 h-[20%] w-[40%] md:h-full md:w-[20%] flex items-center justify-center",
         "stationery":"text-rose-600 m-1 p-1 h-[20%] w-[40%] md:h-full md:w-[20%] flex items-center justify-center",
@@ -85,20 +97,18 @@ export default function CartListBottomNavBar(){
                                     {isLoading && <Loading message={"장바구니"}/>}
                                     {error && <span className="font-extrabold text-red-500 text-3xl font-mono">오류발생으로 장바구니 목록을 불러올 수 없습니다.</span>}
                                     {cartList && cartList.map(list=> {
-                                        const DeleteCartItem= ()=>{
-                                            openModal(checkDeleteTitle,DeleteCheckOneContent)
-                                            if(checkDelete){
-                                                try{
-                                                    DeleteCartOne(list.cartItemId).then(res=> {
-                                                        res.status
-                                                        queryClient.invalidateQueries(["cartList"])
-                                                        return openModal(checkDeleteTitle, checkDeleteOneContent)
-                                                    }).catch(()=>{
-                                                        openModal(checkDeleteTitle,ErrorDeleteOneContent)
-                                                    })
-                                                }catch{
-                                                    console.log("오류발생")
-                                                }}
+                                        const DeleteCartItem=()=>{
+                                            try{
+                                                DeleteCartOne(list.cartItemId).then(()=> {
+                                                    queryClient.invalidateQueries(["cartListItem"])
+                                                    queryClient.invalidateQueries(["cartList"])
+                                                    return openModal(checkDeleteTitle, checkDeleteOneContent)
+                                                }).catch(()=>{
+                                                    openModal(checkDeleteTitle,ErrorDeleteOneContent)
+                                                })
+                                            }catch{
+                                                console.log("오류발생")
+                                            }
                                         }
                                         const checkDeleteTitle="삭제 확인" // modal 제목
                                         const DeleteCheckOneContent=(<div className="flex flex-col items-center justify-center">
@@ -108,9 +118,7 @@ export default function CartListBottomNavBar(){
             <button className="w-[40%] md:w-[7.5rem] h-[3rem] mx-2 rounded-lg bg-sky-400/50 text-black text-xl font-mono hover:bg-sky-400 hover:text-black"
                     onClick={closeModal}>돌아가기</button>
        <span onClick={closeModal}><button className="w-[40%] md:w-[7.5rem] h-[3rem] mx-2 rounded-lg bg-red-200 text-black text-xl font-mono hover:bg-red-500 hover:text-white"
-                                          onClick={()=>{
-                                              setCheckDelete(true)
-                                          }}>삭제하기</button></span></span>
+                                          onClick={DeleteCartItem}>삭제하기</button></span></span>
                                         </div>) //삭제 재확인 modal 내용
                                         const checkDeleteOneContent=(<div className="flex flex-col items-center justify-center">
                                             <img src="/checked_icon.png" alt="성공!" className="w-[40%] h-[40%] md:w-[20rem] md:h-[20rem]"/>
@@ -125,7 +133,7 @@ export default function CartListBottomNavBar(){
                                             <span>
             <button className="w-[40%] md:w-[12.5rem] h-[3rem] mr-3 rounded-lg bg-red-400/50 text-black text-xl font-mono hover:bg-red-400 hover:text-white"
                     onClick={closeModal}>돌아가기</button></span>
-                                        </div>) //삭제 실패확인 modal 내용
+                                        </div>)//삭제 실패확인 modal 내용
                                         const FormatPrice=list.products.productPrice.toLocaleString('ko-KR') //형식에 100,000,000 같은 형식을 붙이기 위함
                                         const FormatSelectedPrice=list.selectedPrice.toLocaleString('ko-KR')
                                        return (<div className="h-[70%] md:h-[30%] w-full flex flex-row justify-center items-center flex-pre-wrap my-2" key={list.cartItemId}>
@@ -139,11 +147,12 @@ export default function CartListBottomNavBar(){
                                             <span className={categoryClassText[list.products.productCategory]}>&#8361;{FormatSelectedPrice}</span>
                                             <span className="m-1 p-1 h-[10%] w-[40%] md:h-[1.5rem] md:w-[20%] flex justify-center items-center">
                                                 <button className="text-rose-700 bg-pink-300 border h-[10%] w-[50%] md:h-[1.5rem] md:w-[50%] border-rose-700 rounded-md md:rounded-lg text-sm md:text-md
-                                            flex justify-center hover:border-transparent hover:bg-rose-700 hover:text-pink-300" type="button" onClick={DeleteCartItem}>삭제하기</button></span>
+                                            flex justify-center hover:border-transparent hover:bg-rose-700 hover:text-pink-300" type="button" onClick={()=>openModal(checkDeleteTitle, DeleteCheckOneContent)}>삭제하기</button></span>
                                         </div>)})}
                                 </div>
                                 <span onClick={()=>setBtnIcon(<FontAwesomeIcon icon="fa-solid fa-angle-up"/>)} className="flex flex-end justify-end mb-1">
                         <button type="button" className="h-[3rem] w-[10rem] border-2 rounded-lg border-blue-400 text-sky-500 text-lg" onClick={()=>{setBottomOpen(false)}}>장바구니 접기</button></span>
+                                <div className="text-rose-700 h-[10%] w-full md:h-[1.5rem] flex justify-end text-md md:text-lg">총 가격 : &#8361;{TotalPriceWon}</div>
                             </div>
                         </Dialog.Panel>
                     </div>

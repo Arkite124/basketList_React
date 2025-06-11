@@ -25,13 +25,30 @@ export async function DeleteCartOne(cartItemId){
        url:`${serverURL}`,
         data:{cartItemId:cartItemId},
         withCredentials:true,
-       headers: {"Content-Type": "application/json"},
+       headers: {"Content-Type": "application/json"}
     })
 }
 
 // 장바구니 아이템 모두 삭제
 export async function DeleteCartAll(){
     return axios.delete(`${serverURL}/All`,{
+        withCredentials:true
+    })
+}
+// 수량 조절
+export async function UpdateQuantity(cartItemId,quantity){
+    return axios.put(`${serverURL}`,{
+        cartItemId:cartItemId,
+        quantity:quantity
+    },{
+        withCredentials:true,
+        headers: {"Content-Type": "application/json"},
+    })
+}
+
+//totalPrice 가져오기
+export async function TotalPrice(){
+    return axios(`${serverURL}/totalPrice`,{
         withCredentials:true
     })
 }

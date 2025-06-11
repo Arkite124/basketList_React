@@ -186,17 +186,17 @@ export default function SignupPage(){
     return(
         <div className="flex flex-col justify-center items-center md:w-full h-[120%]">
             <h2 className="text-3xl text-bold font-mono text-sky-600">회원가입 페이지</h2>
-            <div className="flex flex-row justify-center items-center md:w-full h-[120%]">
+            <div className="flex flex-row justify-center items-center md:w-full h-[100%]">
             <span className="text-red-500">*</span> &nbsp;표시 되어 있는 항목들은 필수항목 입니다.
             </div>
-            <form className="w-0.9 md:w-[50%] flex flex-col justify-center h-full my-2">
+            <form className="w-[97%] md:w-[60%] xl:w-[50%] flex flex-col justify-center h-full my-2">
                 <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
                     <span className="flex items-center justify-end w-[30%] md:w-[22%] h-[20%] md:h-full text-sm md:text-md">
                         <span className="text-red-500 text-sm md:text-md">*</span>&nbsp;아이디 :</span>
                     <input type="text" name="userName" value={user.userName} onChange={(e) => inputHandler(e)}
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
-            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="아이디는 6자가 넘어야 합니다."/>
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="아이디는 6자~16자까지 가능 합니다."/>
                     <button type="button"
                             className="w-[6.5rem] h-[2rem] ml-2 border border-slate-300 rounded-lg bg-slate-200 text-black text-sm md:text-md
                              font-mono hover:bg-slate-700 hover:text-white hover:border-transparent"
@@ -214,7 +214,7 @@ export default function SignupPage(){
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
             font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll"
-                           placeholder="비밀번호는 8자가 넘어야 합니다."/>
+                           placeholder="비밀번호는 8자~20자까지 가능합니다."/>
                 </label>
                 <label className="flex flex-row items-center my-2 w-full h-[2rem] justify-start font-mono">
                     <span className="flex items-center justify-end w-[32%] md:w-[22%] h-[20%] md:h-full text-sm md:text-md"><span className="text-red-500 text-sm md:text-md">*</span>&nbsp;비밀번호 확인 :</span>
@@ -235,7 +235,7 @@ export default function SignupPage(){
                     <input type="text" name="userNickname" value={user.userNickname} onChange={(e) => inputHandler(e)}
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
-            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="닉네임은 3자가 넘어야 합니다."/>
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="닉네임은 3자~12자 까지 가능 합니다."/>
                     <button type="button"
                             className="w-[6.5rem] h-[2rem] ml-2 border border-slate-300 rounded-lg bg-slate-200 text-black text-sm md:text-md
                              font-mono hover:bg-slate-700 hover:text-white hover:border-transparent"
@@ -315,7 +315,7 @@ export default function SignupPage(){
                     }}
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
-            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll"/>
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="입력창에 '-'를 붙이지 말아주세요"/>
                     <button type="button"
                             className="w-[6.5rem] h-[2rem] ml-2 border border-slate-300 rounded-lg bg-slate-200 text-black text-sm md:text-md
                              font-mono hover:bg-slate-700 hover:text-white hover:border-transparent"
@@ -385,7 +385,7 @@ export default function SignupPage(){
                     }}
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem]
-            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll"/>
+            font-sans my-2 min-w-2xs max-w-6xl w-[70%] md:w-[50%] h-full min-h-[40%] overflow-scroll" placeholder="이름을 정확하게 입력해주세요."/>
                 </label>
                 <label className="flex flex-row items-center my-2 w-full h-[4rem] justify-start font-mono">
                     <span className="flex items-center justify-end w-[30%] md:w-[22%] h-full"> 자기소개 :</span>
@@ -394,7 +394,7 @@ export default function SignupPage(){
                     }}
                            className="border border-sky-300 focus:outline-none focus:border-sky-300 focus:ring-sky-300
             focus:ring-1 rounded-md text-md shadow-sm placeholder-slate-400 ml-[0.5rem] resize-none
-            font-sans my-2 min-w-2xs max-w-6xl w-full md:w-[50%] h-full overflow-hidden"/>
+            font-sans my-2 min-w-2xs max-w-6xl w-full md:w-[50%] h-full overflow-hidden" placeholder="자기소개는 간단히 자기를 어필할 수 있게 써주세요. 없어도 됩니다."/>
                 </label>
                 <div className="w-[74%] flex justify-end h-[3rem] mb-3">
                     <button type="button"
