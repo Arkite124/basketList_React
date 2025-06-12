@@ -43,6 +43,12 @@ export default function CartMainPage(){
 
     const [total,setTotal]=useState(0)
     //totalPrice를 가져오기 위한 useState
+    useEffect(() => {
+        TotalPrice().then(
+            res=> {
+                setTotal(res.data)}
+        )
+    }, [cartQuantity,cartList]);
     const TotalPriceWon=total.toLocaleString('ko-KR')
     //세자리 수마다 쉼표를 찍기 위한 형식
     const categoryClassText={
@@ -126,18 +132,13 @@ export default function CartMainPage(){
                         }
                         handleChange(cartItemId, cartQty - 1);
                     };
-                    useEffect(() => {
-                        TotalPrice().then(
-                            res=> {
-                                setTotal(res.data)}
-                        )
-                    }, [cartQty]);
                     UpdateQuantity(cartListItem.cartItemId,cartQty).then(
                         res=> {
                             res.status
                             queryClient.invalidateQueries(["cartList"])
                         }
                     )
+
                     const FormatPrice=cartListItem.products.productPrice.toLocaleString('ko-KR')
                     const FormatSelectedPrice=cartListItem.selectedPrice.toLocaleString('ko-KR')
                     return (<tr className="h-[25%] md:h-[7.5rem] w-full flex flex-row justify-center items-center flex-pre-wrap my-2" key={cartListItem.cartItemId}>
@@ -161,7 +162,7 @@ export default function CartMainPage(){
                 </tbody>
                 <tfoot>
                    <tr>
-                      <td className="text-rose-700 h-[10%] w-full md:h-[1.5rem] flex flex-end justify-end text-md md:text-lg">총 가격 : &#8361;{TotalPriceWon}</td>
+                      <td className="text-rose-700 h-[10%] w-full md:h-[1.5rem] flex flex-end justify-end text-md md:text-lg mb-4">총 가격 : &#8361;{TotalPriceWon}</td>
                    </tr>
                 </tfoot>
             </table>

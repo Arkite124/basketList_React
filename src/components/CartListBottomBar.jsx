@@ -27,14 +27,11 @@ export default function CartListBottomNavBar(){
     })
     const [total,setTotal]=useState(0)
     useEffect(() => {
-        if(loginUser!==null){
-            TotalPrice().then(
-                res => {
-                    setTotal(res.data)
-                }
-            )
-        }
-    }, [loginUser,queryClient]);
+        TotalPrice().then(
+            res=> {
+                setTotal(res.data)}
+        )
+    }, [cartList]);
     //totalPrice를 가져오기 위한 useState
     const TotalPriceWon=total.toLocaleString('ko-KR')
     const categoryClassText={
